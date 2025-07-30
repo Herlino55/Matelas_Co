@@ -1,0 +1,24 @@
+{
+  "name": "matelas_co",
+  "version": "1.0.0",
+  "description": "il s'agit d'une application qui permettra de gérer le stock d'une petite boutique de vente de matelas",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "multer": "^2.0.2",
+    "pg": "^8.16.3",
+    "sequelize": "^6.37.7",
+    "sequelize-cli": "^6.6.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
