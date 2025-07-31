@@ -8,5 +8,6 @@ router.post('/',authMiddleware, boissonController.createBoissons);
 router.get('/',authMiddleware, boissonController.getAllBoissons);
 router.put('/:id',authMiddleware, boissonController.updateBoisson);
 router.delete('/:id',authMiddleware, boissonController.deleteBoisson);
+router.get('/search',authMiddleware, boissonController.searchBoissons);
 
 module.exports = router;

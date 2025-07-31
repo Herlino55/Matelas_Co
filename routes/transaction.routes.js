@@ -9,4 +9,7 @@ router.get('/', TransactionController.getAllTransaction);
 router.put('/:id', TransactionController.updateTransaction);
 router.delete('/:id', TransactionController.deleteTransaction);
 
+//recherche
+router.get('/search', TransactionController.searchTransactions);
+
 module.exports = router;

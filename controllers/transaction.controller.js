@@ -1,4 +1,5 @@
 const {Transaction} = require('../models');
+const { Op } = require("sequelize");
 
 exports.createTransaction = async (req, res) => {
     try {
@@ -83,4 +84,28 @@ exports.deleteTransaction = async (req, res) => {
     } catch (error) {
         res.status(500).json({message: "Erreur de serveur", error});
     }
+};
+
+exports.searchTransactions = async (req, res) => {
+  try {
+    const { type, date } = req.query;
+
+    const whereClause = {};
+    if (type) whereClause.type = type;
+    if (date) {
+      whereClause.createdAt = {
+        [Op.gte]: new Date(date),
+        [Op.lt]: new Date(new Date(date).getTime() + 24 * 60 * 60 * 1000) // jusqu'à fin de journée
+      };
+    }
+
+    const transactions = await Transaction.findAll({ where: whereClause });
+
+    if (transactions.length === 0)
+      return res.status(404).json({ message: "Aucune transaction trouvée" });
+
+    res.status(200).json(transactions);
+  } catch (error) {
+    res.status(500).json({ message: "Erreur serveur", error });
+  }
 };

@@ -1,5 +1,6 @@
-const { where } = require('sequelize');
+const { where,Op } = require('sequelize');
 const {Boisson} = require('../models');
+
 
 
 exports.createBoissons = async (req, res) => {
@@ -82,4 +83,29 @@ exports.deleteBoisson = async (req, res) => {
     } catch (error) {
         res.status(500).json({message: "Erreur lors de la suppression", error});
     }
+};
+
+exports.searchBoissons = async (req, res) => {
+  try {
+    const { prix, date, categorie } = req.query;
+
+    const whereClause = {};
+    if (prix) whereClause.prix = prix;
+    if (date) {
+      whereClause.createdAt = {
+        [Op.gte]: new Date(date),
+        [Op.lt]: new Date(new Date(date).getTime() + 24 * 60 * 60 * 1000)
+      };
+    }
+    if (categorie) whereClause.categorie = categorie;
+
+    const boissons = await Boisson.findAll({ where: whereClause });
+
+    if (boissons.length === 0)
+      return res.status(404).json({ message: "Aucune boisson trouvée" });
+
+    res.status(200).json(boissons);
+  } catch (error) {
+    res.status(500).json({ message: "Erreur serveur", error });
+  }
 };
