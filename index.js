@@ -6,7 +6,9 @@ const sequelize = require('./config/db');
 const app = express();
 
 const RouteMatelas = require('./routes/matelas.routes');
-// const RouteBoisson = require('/routes/')
+const RouteUser = require('./routes/user.routes');
+const RouteBoisson = require('./routes/boisson.routes');
+const RouteTransaction = require('./routes/transaction.routes');
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -20,9 +22,12 @@ sequelize.authenticate()
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+
 // Routes
 app.use('/v1/matelas',RouteMatelas );
-app
+app.use('/v1/users',RouteUser);
+app.use('/v1/boissons', RouteBoisson);
+app.use('/v1/transactions', RouteTransaction);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Serveur démarré sur le port ${PORT}`));

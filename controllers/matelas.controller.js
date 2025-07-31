@@ -38,7 +38,7 @@ exports.createMatelas = async (req, res) => {
 // Lister tous les matelas
 exports.getAllMatelas = async (req, res) => {
  try  {
-    const matelas = await Matelas.findAll({ include: Dates });
+    const matelas = await Matelas.findAll();
     
     if(!matelas)
         res.status(404).json({"message": "echec lors de la recuperation"});
