@@ -1,7 +1,6 @@
 const { where } = require('sequelize');
 const {User} = require('../models');
 const bcrypt = require('bcrypt');
-// const jwt = require('jsonwebtoken');
 
 //ajout d'un utilisateur
 exports.createUser = async (req, res) => {
@@ -96,6 +95,7 @@ exports.updateUser = async (req, res) => {
         res.status(500).json({message : 'erreur lors de la mise a jour', error});
     }
 };
+
 exports.deleteUser = async (req, res) => {
     try {
         const id = parseInt(req.params.id);

@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const boissonController = require('../controllers/boisson.controller');
+const authMiddleware = require('../middlewares/auth.middleware')
 
 //CRUD
-router.post('/', boissonController.createBoissons);
-router.get('/', boissonController.getAllBoissons);
-router.put('/:id', boissonController.updateBoisson);
-router.delete('/:id', boissonController.deleteBoisson);
+router.post('/',authMiddleware, boissonController.createBoissons);
+router.get('/',authMiddleware, boissonController.getAllBoissons);
+router.put('/:id',authMiddleware, boissonController.updateBoisson);
+router.delete('/:id',authMiddleware, boissonController.deleteBoisson);
 
 module.exports = router;
