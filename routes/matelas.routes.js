@@ -6,9 +6,9 @@ const upload = require('../middlewares/upload');
 // CRUD
 router.post('/', upload.single('photo'), matelasController.createMatelas);
 router.get('/', matelasController.getAllMatelas);
-router.put('/:id', matelasController.updateMatelas);
+router.put('/:id',upload.single('photo'), matelasController.updateMatelas);
 router.delete('/:id', matelasController.deleteMatelas);
-router.get('/dim',upload.single('photo'), matelasController.searchMatelas);
+router.get('/dim', matelasController.searchMatelas);
 router.get('/minimalStock', matelasController.verifierStockMatelas);
 
 module.exports = router;

@@ -13,7 +13,7 @@ const RouteAuth = require('./routes/auth.routes');
 const authMiddleware = require('./middlewares/auth.middleware');
 app.use(express.json());
 
-app.get('/', (req, res) => {
+app.get('/v1', (req, res) => {
   res.send('Bienvenue dans l’API de gestion de stock');
 });
 

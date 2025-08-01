@@ -8,9 +8,10 @@ router.post('/',authMiddleware, boissonController.createBoissons);
 router.get('/',authMiddleware, boissonController.getAllBoissons);
 router.put('/:id',authMiddleware, boissonController.updateBoisson);
 router.delete('/:id',authMiddleware, boissonController.deleteBoisson);
-router.get('/minimalStock',authMiddleware, boissonController.verifierStockBoisson);
 
 //recherche
 router.get('/search',authMiddleware, boissonController.searchBoissons);
 
+//alerte
+router.get('/minimalStock',authMiddleware, boissonController.verifierStockBoisson);
 module.exports = router;

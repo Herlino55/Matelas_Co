@@ -34,7 +34,6 @@ exports.createMatelas = async (req, res) => {
   }
 };
 
-
 // Lister tous les matelas
 exports.getAllMatelas = async (req, res) => {
  try  {
@@ -110,11 +109,10 @@ exports.deleteMatelas = async (req, res) => {
   }
 };
 
-
 // Récupérer conditionnees
 exports.searchMatelas = async (req, res) => {
   try {
-    const { nom, type, prix, longueur, largeur, date } = req.query;
+    const { nom, type, prix, longueur, largeur, epaisseur, date } = req.query;
     const whereClause = {};
 
     if (nom) {
@@ -135,6 +133,9 @@ exports.searchMatelas = async (req, res) => {
 
     if (largeur && !isNaN(largeur)) {
       whereClause.largeur = parseInt(largeur);
+    }
+    if(epaisseur && !isNaN(epaisseur)) {
+      whereClause.epaisseur = parseInt(epaisseur);
     }
 
     if (date && !isNaN(Date.parse(date))) {
