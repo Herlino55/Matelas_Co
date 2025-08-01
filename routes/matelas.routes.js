@@ -9,5 +9,6 @@ router.get('/', matelasController.getAllMatelas);
 router.put('/:id', matelasController.updateMatelas);
 router.delete('/:id', matelasController.deleteMatelas);
 router.get('/dim',upload.single('photo'), matelasController.searchMatelas);
+router.get('/minimalStock', matelasController.verifierStockMatelas);
 
 module.exports = router;

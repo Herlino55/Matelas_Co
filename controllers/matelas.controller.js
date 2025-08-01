@@ -162,3 +162,34 @@ exports.searchMatelas = async (req, res) => {
     return res.status(500).json({ message: "Erreur lors de la recherche", error });
   }
 };
+
+exports.verifierStockMatelas = async (req, res) => {
+  try {
+    const stockMinimal = 5;
+
+    const matelasFaibleStock = await Matelas.findAll({
+      where: {
+        qte: {
+          [Op.lte]: stockMinimal
+        }
+      },
+      attributes: ['id', 'nom', 'qte'] // Ajoute juste les colonnes utiles
+    });
+
+    if (matelasFaibleStock.length === 0) {
+      return res.status(200).json({ message: "Tous les matelas ont un stock suffisant." });
+    }
+
+    return res.status(200).json({
+      message: "Stock faible détecté pour certains matelas.",
+      matelas: matelasFaibleStock.map(m => ({
+        id: m.id,
+        nom: m.nom,
+        quantiteRestante: m.qte
+      }))
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Erreur lors de la vérification du stock des matelas", error });
+  }
+};
+

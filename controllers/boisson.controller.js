@@ -109,3 +109,34 @@ exports.searchBoissons = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur", error });
   }
 };
+
+exports.verifierStockBoisson = async (req, res) => {
+  try {
+    const stockMinimal = 10;
+
+    const boissonFaibleStock = await Boisson.findAll({
+      where: {
+        qte: {
+          [Op.lte]: stockMinimal
+        }
+      },
+      attributes: ['id', 'nom', 'categorie', 'qte']
+    });
+
+    if (boissonFaibleStock.length === 0) {
+      return res.status(200).json({ message: "Toutes les boissons ont un stock suffisant." });
+    }
+
+    return res.status(200).json({
+      message: "Stock faible détecté pour certaines boissons.",
+      boissons: boissonFaibleStock.map(b => ({
+        id: b.id,
+        nom: b.nom,
+        categorie: b.categorie,
+        quantiteRestante: b.qte
+      }))
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Erreur lors de la vérification du stock des boissons", error });
+  }
+};
