@@ -2,7 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const path = require('path');
 const sequelize = require('./config/db');
-
+const cors = require('cors');
 const app = express();
 
 const RouteMatelas = require('./routes/matelas.routes');
@@ -32,5 +32,13 @@ app.use('/v1/boissons',RouteBoisson);
 app.use('/v1/transactions',authMiddleware, RouteTransaction);
 app.use('/v1/auth',RouteAuth);
 
+app.use(cors(
+  {
+    origin: '*',
+    methods: ['GET', 'POST', 'DELETE','PUT'],
+    allowedHeaders: ['Content-Type','Authorization']
+  }
+));
+
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Serveur démarré sur le port ${PORT}`));
+app.listen(PORT,'0.0.0.0', () => console.log(`Serveur lancé sur http://192.168.1.196:${PORT}`));
